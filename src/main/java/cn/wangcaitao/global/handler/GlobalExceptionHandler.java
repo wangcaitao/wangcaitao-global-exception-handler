@@ -1,6 +1,6 @@
 package cn.wangcaitao.global.handler;
 
-import cn.wangcaitao.common.constant.ResultConstant;
+import cn.wangcaitao.common.constant.HttpStatusConstant;
 import cn.wangcaitao.common.entity.Result;
 import cn.wangcaitao.common.exception.ResultException;
 import cn.wangcaitao.common.util.ResultUtils;
@@ -30,15 +30,15 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = Exception.class)
     public Result handlerException(Exception e) {
         if (e instanceof NoHandlerFoundException) {
-            return ResultUtils.error(ResultConstant.NOT_FOUND_CODE, ResultConstant.NOT_FOUND_MSG);
+            return ResultUtils.error(HttpStatusConstant.NOT_FOUND_CODE, HttpStatusConstant.NOT_FOUND_MSG);
         } else if (e instanceof BindException) {
-            return ResultUtils.error(ResultConstant.BAD_REQUEST_CODE, ((BindException) e).getFieldErrors().get(0).getDefaultMessage());
+            return ResultUtils.error(HttpStatusConstant.BAD_REQUEST_CODE, ((BindException) e).getFieldErrors().get(0).getDefaultMessage());
         } else if (e instanceof MethodArgumentNotValidException) {
-            return ResultUtils.error(ResultConstant.BAD_REQUEST_CODE, ((MethodArgumentNotValidException) e).getBindingResult().getFieldErrors().get(0).getDefaultMessage());
+            return ResultUtils.error(HttpStatusConstant.BAD_REQUEST_CODE, ((MethodArgumentNotValidException) e).getBindingResult().getFieldErrors().get(0).getDefaultMessage());
         } else if (e instanceof AccessDeniedException) {
-            return ResultUtils.error(ResultConstant.FORBIDDEN_CODE, ResultConstant.FORBIDDEN_MSG);
+            return ResultUtils.error(HttpStatusConstant.FORBIDDEN_CODE, HttpStatusConstant.FORBIDDEN_MSG);
         } else if (e instanceof HttpRequestMethodNotSupportedException) {
-            return ResultUtils.error(ResultConstant.METHOD_NOT_ALLOWED_CODE, ResultConstant.METHOD_NOT_ALLOWED_MSG);
+            return ResultUtils.error(HttpStatusConstant.METHOD_NOT_ALLOWED_CODE, HttpStatusConstant.METHOD_NOT_ALLOWED_MSG);
         } else if (e instanceof ResultException) {
             String params = ((ResultException) e).getParams();
             if (StringUtils.isNotEmpty(params)) {
@@ -47,13 +47,13 @@ public class GlobalExceptionHandler {
 
             return ResultUtils.error(((ResultException) e).getCode(), ((ResultException) e).getMsg());
         } else if (e instanceof HttpMessageNotReadableException) {
-            return ResultUtils.error(ResultConstant.BAD_REQUEST_CODE, ResultConstant.BAD_REQUEST_MSG);
+            return ResultUtils.error(HttpStatusConstant.BAD_REQUEST_CODE, HttpStatusConstant.BAD_REQUEST_MSG);
         } else if (e instanceof HttpMediaTypeNotSupportedException) {
-            return ResultUtils.error(ResultConstant.UNSUPPORTED_MEDIA_TYPE_CODE, ResultConstant.UNSUPPORTED_MEDIA_TYPE_MSG);
+            return ResultUtils.error(HttpStatusConstant.UNSUPPORTED_MEDIA_TYPE_CODE, HttpStatusConstant.UNSUPPORTED_MEDIA_TYPE_MSG);
         } else {
             LOGGER.error("un handle exception: {}", e.getClass().getName());
 
-            return ResultUtils.error(ResultConstant.INTERNAL_SERVER_ERROR_CODE, ResultConstant.INTERNAL_SERVER_ERROR_MSG);
+            return ResultUtils.error(HttpStatusConstant.INTERNAL_SERVER_ERROR_CODE, HttpStatusConstant.INTERNAL_SERVER_ERROR_MSG);
         }
     }
 }
