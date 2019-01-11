@@ -15,6 +15,7 @@ import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 /**
@@ -47,9 +48,11 @@ public class GlobalExceptionHandler {
 
             return ResultUtils.error(((ResultException) e).getCode(), ((ResultException) e).getMsg());
         } else if (e instanceof HttpMessageNotReadableException) {
-            return ResultUtils.error(HttpStatusConstant.BAD_REQUEST_CODE, HttpStatusConstant.BAD_REQUEST_MSG);
+            return ResultUtils.error(HttpStatusConstant.BAD_REQUEST_CODE, e.getCause().getLocalizedMessage());
         } else if (e instanceof HttpMediaTypeNotSupportedException) {
             return ResultUtils.error(HttpStatusConstant.UNSUPPORTED_MEDIA_TYPE_CODE, HttpStatusConstant.UNSUPPORTED_MEDIA_TYPE_MSG);
+        } else if (e instanceof MethodArgumentTypeMismatchException) {
+            return ResultUtils.error(HttpStatusConstant.BAD_REQUEST_CODE, e.getMessage());
         } else {
             LOGGER.error("un handle exception: {}", e.getClass().getName());
 
