@@ -48,7 +48,7 @@ public class GlobalExceptionHandler {
 
             return ResultUtils.error(((ResultException) e).getCode(), ((ResultException) e).getMsg());
         } else if (e instanceof HttpMessageNotReadableException) {
-            return ResultUtils.error(HttpStatusConstant.BAD_REQUEST_CODE, e.getCause().getLocalizedMessage());
+            return ResultUtils.error(HttpStatusConstant.BAD_REQUEST_CODE, null == e.getCause() ? "缺少请求参数" : e.getCause().getLocalizedMessage());
         } else if (e instanceof HttpMediaTypeNotSupportedException) {
             return ResultUtils.error(HttpStatusConstant.UNSUPPORTED_MEDIA_TYPE_CODE, HttpStatusConstant.UNSUPPORTED_MEDIA_TYPE_MSG);
         } else if (e instanceof MethodArgumentTypeMismatchException) {
