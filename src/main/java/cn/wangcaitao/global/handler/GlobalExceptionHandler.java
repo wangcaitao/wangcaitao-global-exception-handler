@@ -13,8 +13,10 @@ import org.springframework.validation.BindException;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
@@ -53,6 +55,10 @@ public class GlobalExceptionHandler {
             return ResultUtils.error(HttpStatusConstant.UNSUPPORTED_MEDIA_TYPE_CODE, HttpStatusConstant.UNSUPPORTED_MEDIA_TYPE_MSG);
         } else if (e instanceof MethodArgumentTypeMismatchException) {
             return ResultUtils.error(HttpStatusConstant.BAD_REQUEST_CODE, e.getMessage());
+        } else if (e instanceof ServletRequestBindingException) {
+            return ResultUtils.error(HttpStatusConstant.BAD_REQUEST_CODE, e.getMessage());
+        } else if (e instanceof HttpClientErrorException) {
+            return ResultUtils.error(HttpStatusConstant.BAD_REQUEST_CODE, "授权失败");
         } else {
             LOGGER.error("un handle exception: {}", e.getClass().getName());
 
