@@ -13,6 +13,34 @@
     <artifactId>wangcaitao-global-exception-handler</artifactId>
     <version>1.0.0</version>
 
+    <name>wangcaitao-global-exception-handler</name>
+    <description>spring boot 统一异常处理</description>
+    <url>https://github.com/wangcaitao/wwangcaitao-global-exception-handler</url>
+
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>wangcaitao</name>
+            <email>wangcaitao@aliyun.com</email>
+            <url>http://wangcaitao.cn</url>
+        </developer>
+    </developers>
+
+    <scm>
+        <url>https://github.com/wangcaitao/wangcaitao-global-exception-handler</url>
+        <connection>scm:git:https://github.com/wangcaitao/wangcaitao-global-exception-handler.git</connection>
+        <developerConnection>scm:git:https://github.com/wangcaitao/wangcaitao-global-exception-handler.git
+        </developerConnection>
+        <tag>1.0.0</tag>
+    </scm>
+
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -67,4 +95,63 @@
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>release</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <version>3.0.1</version>
+                        <executions>
+                            <execution>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>jar-no-fork</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>3.0.1</version>
+                        <executions>
+                            <execution>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>1.6</version>
+                        <executions>
+                            <execution>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+            <distributionManagement>
+                <snapshotRepository>
+                    <id>oss-sonatype</id>
+                    <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+                </snapshotRepository>
+                <repository>
+                    <id>oss-sonatype</id>
+                    <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+                </repository>
+            </distributionManagement>
+        </profile>
+    </profiles>
 </project>
