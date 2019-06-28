@@ -60,7 +60,7 @@ public class GlobalExceptionHandler {
         } else if (e instanceof HttpClientErrorException) {
             return ResultUtils.error(HttpStatusConstant.BAD_REQUEST_CODE, "授权失败");
         } else {
-            LOGGER.error("un handle exception: {}", e.getClass().getName());
+            LOGGER.error("un handle exception: {}", e.getClass().getName(), e);
 
             return ResultUtils.error(HttpStatusConstant.INTERNAL_SERVER_ERROR_CODE, HttpStatusConstant.INTERNAL_SERVER_ERROR_MSG);
         }
