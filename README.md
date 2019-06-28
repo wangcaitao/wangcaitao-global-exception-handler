@@ -9,7 +9,7 @@ spring boot 统一异常处理
     <dependency>
         <groupId>cn.wangcaitao</groupId>
         <artifactId>wangcaitao-global-exception-handler</artifactId>
-        <versiion>1.0.0</version>
+        <versiion>1.0.1</version>
     </dependency>
     ```
 1. 配置

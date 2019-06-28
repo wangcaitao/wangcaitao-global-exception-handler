@@ -11,7 +11,7 @@
 
     <groupId>cn.wangcaitao</groupId>
     <artifactId>wangcaitao-global-exception-handler</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
 
     <name>wangcaitao-global-exception-handler</name>
     <description>spring boot 统一异常处理</description>
@@ -36,9 +36,8 @@
     <scm>
         <url>https://github.com/wangcaitao/wangcaitao-global-exception-handler</url>
         <connection>scm:git:https://github.com/wangcaitao/wangcaitao-global-exception-handler.git</connection>
-        <developerConnection>scm:git:https://github.com/wangcaitao/wangcaitao-global-exception-handler.git
-        </developerConnection>
-        <tag>1.0.0</tag>
+        <developerConnection>scm:git:https://github.com/wangcaitao/wangcaitao-global-exception-handler.git</developerConnection>
+        <tag>1.0.1</tag>
     </scm>
 
     <dependencyManagement>
