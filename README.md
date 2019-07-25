@@ -7,9 +7,9 @@ spring boot 统一异常处理
 1. 添加依赖
     ```xml
     <dependency>
-        <groupId>cn.wangcaitao</groupId>
+        <groupId>com.wangcaitao</groupId>
         <artifactId>wangcaitao-global-exception-handler</artifactId>
-        <versiion>1.0.1</version>
+        <versiion>2.0.0</version>
     </dependency>
     ```
 1. 配置
