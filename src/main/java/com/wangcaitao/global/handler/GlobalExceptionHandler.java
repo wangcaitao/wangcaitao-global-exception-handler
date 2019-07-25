@@ -1,9 +1,9 @@
-package cn.wangcaitao.global.handler;
+package com.wangcaitao.global.handler;
 
-import cn.wangcaitao.common.constant.HttpStatusConstant;
-import cn.wangcaitao.common.entity.Result;
-import cn.wangcaitao.common.exception.ResultException;
-import cn.wangcaitao.common.util.ResultUtils;
+import com.wangcaitao.common.constant.HttpStatusConstant;
+import com.wangcaitao.common.entity.Result;
+import com.wangcaitao.common.exception.ResultException;
+import com.wangcaitao.common.util.ResultUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
