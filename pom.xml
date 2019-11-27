@@ -11,7 +11,7 @@
 
     <groupId>com.wangcaitao</groupId>
     <artifactId>wangcaitao-global-exception-handler</artifactId>
-    <version>2.0.0</version>
+    <version>2.1.0</version>
 
     <name>wangcaitao-global-exception-handler</name>
     <description>spring boot 统一异常处理</description>
@@ -37,7 +37,7 @@
         <url>https://github.com/wangcaitao/wangcaitao-global-exception-handler</url>
         <connection>scm:git:https://github.com/wangcaitao/wangcaitao-global-exception-handler.git</connection>
         <developerConnection>scm:git:https://github.com/wangcaitao/wangcaitao-global-exception-handler.git</developerConnection>
-        <tag>2.0.0</tag>
+        <tag>2.1.0</tag>
     </scm>
 
     <dependencyManagement>
@@ -57,7 +57,7 @@
         <dependency>
             <groupId>com.wangcaitao</groupId>
             <artifactId>wangcaitao-common</artifactId>
-            <version>2.0.0</version>
+            <version>2.1.0</version>
         </dependency>
         <!-- wangcaitao end -->
 
@@ -76,6 +76,11 @@
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
             <scope>provided</scope>
         </dependency>
         <!-- others end -->
