@@ -24,4 +24,4 @@ spring boot 统一异常处理
         add-mappings: false
     ```
 
-1. `@SpringBootApplication` 修改为 `@SpringBootApplication(scanBasePackages = {"com.wangcaitao"})`, 同时增加启动类所在 `package` 到 `scanBasePackages`
+1. `@SpringBootApplication` 修改为 `@SpringBootApplication(scanBasePackages = {"com.wangcaitao.global", "com.xxx.xxx"})`, `com.xxx.xxx` 为启动类所在 `package`
