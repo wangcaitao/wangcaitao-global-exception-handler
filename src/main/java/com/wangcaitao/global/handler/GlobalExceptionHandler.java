@@ -1,5 +1,6 @@
 package com.wangcaitao.global.handler;
 
+import com.wangcaitao.common.constant.HttpStatusConstant;
 import com.wangcaitao.common.constant.HttpStatusEnum;
 import com.wangcaitao.common.entity.Result;
 import com.wangcaitao.common.exception.ResultException;
@@ -8,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindException;
+import org.springframework.validation.FieldError;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -58,7 +60,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(value = NoHandlerFoundException.class)
     public Result<Serializable> handlerException(NoHandlerFoundException e) {
-        log.error("resource not fund.", e);
+        log.error("resource not fund. {} {}", e.getHttpMethod(), e.getRequestURL());
 
         return ResultUtils.error(HttpStatusEnum.NOT_FOUND);
     }
@@ -71,9 +73,9 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(value = HttpMediaTypeNotSupportedException.class)
     public Result<Serializable> handlerException(HttpMediaTypeNotSupportedException e) {
-        log.error("content-type error. content-type: {}", e.getContentType(), e);
+        log.error("content-type error. request content-type: {}, support content-type: {}", e.getContentType(), e.getSupportedMediaTypes());
 
-        return ResultUtils.error(415, "Content-Type 错误");
+        return ResultUtils.error(HttpStatusEnum.UNSUPPORTED_MEDIA_TYPE);
     }
 
     /**
@@ -84,9 +86,9 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(value = HttpMessageNotReadableException.class)
     public Result<Serializable> handlerException(HttpMessageNotReadableException e) {
-        log.error("miss request body.", e);
+        log.error("miss request body.");
 
-        return ResultUtils.error(400, "缺少请求参数");
+        return ResultUtils.error(HttpStatusConstant.BAD_REQUEST_CODE, "缺少请求参数");
     }
 
     /**
@@ -97,9 +99,9 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(value = HttpRequestMethodNotSupportedException.class)
     public Result<Serializable> handlerException(HttpRequestMethodNotSupportedException e) {
-        log.error("method error. method: {}", e.getMethod(), e);
+        log.error("method error. request method: {}, support method: {}", e.getMethod(), e.getSupportedMethods());
 
-        return ResultUtils.error(405, "请求方式错误");
+        return ResultUtils.error(HttpStatusEnum.METHOD_NOT_ALLOWED);
     }
 
     /**
@@ -110,11 +112,11 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(value = ResultException.class)
     public Result<Serializable> handlerException(ResultException e) {
-        log.error("result error. msg: {}", e.getMsg(), e);
-
         String params = e.getParams();
-        if (StringUtils.isNotEmpty(params)) {
-            log.error("request params: {}", params, e);
+        if (StringUtils.isEmpty(params)) {
+            log.error("result error. msg: {}", e.getMsg(), e);
+        } else {
+            log.error("result error. msg: {}, request params: {}", e.getMsg(), params, e);
         }
 
         return ResultUtils.error(e.getCode(), e.getMsg());
@@ -128,8 +130,10 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(value = BindException.class)
     public Result<Serializable> handlerException(BindException e) {
-        return ResultUtils.error(400, e.getBindingResult().getFieldErrors().get(0).getDefaultMessage());
+        FieldError fieldError = e.getBindingResult().getFieldErrors().get(0);
+        log.error("param validate error. objectName: {}, field: {}, message: {}", fieldError.getObjectName(), fieldError.getField(), fieldError.getDefaultMessage());
 
+        return ResultUtils.error(HttpStatusConstant.BAD_REQUEST_CODE, fieldError.getDefaultMessage());
     }
 
     /**
@@ -140,6 +144,9 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
     public Result<Serializable> handlerException(MethodArgumentNotValidException e) {
-        return ResultUtils.error(400, e.getBindingResult().getFieldErrors().get(0).getDefaultMessage());
+        FieldError fieldError = e.getBindingResult().getFieldErrors().get(0);
+        log.error("param validate error. objectName: {}, field: {}, message: {}", fieldError.getObjectName(), fieldError.getField(), fieldError.getDefaultMessage());
+
+        return ResultUtils.error(HttpStatusConstant.BAD_REQUEST_CODE, fieldError.getDefaultMessage());
     }
 }
