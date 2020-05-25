@@ -6,7 +6,6 @@ import com.wangcaitao.common.entity.Result;
 import com.wangcaitao.common.exception.ResultException;
 import com.wangcaitao.common.util.ResultUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
@@ -47,9 +46,18 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(value = RuntimeException.class)
     public Result<Serializable> handlerException(RuntimeException e) {
-        log.error("runtime error.", e);
-
         return ResultUtils.error();
+    }
+
+    /**
+     * ResultException handler
+     *
+     * @param e ResultException
+     * @return Result
+     */
+    @ExceptionHandler(value = ResultException.class)
+    public Result<Serializable> handlerException(ResultException e) {
+        return ResultUtils.error(e.getCode(), e.getMsg());
     }
 
     /**
@@ -102,24 +110,6 @@ public class GlobalExceptionHandler {
         log.error("method error. request method: {}, support method: {}", e.getMethod(), e.getSupportedMethods());
 
         return ResultUtils.error(HttpStatusEnum.METHOD_NOT_ALLOWED);
-    }
-
-    /**
-     * ResultException handler
-     *
-     * @param e ResultException
-     * @return Result
-     */
-    @ExceptionHandler(value = ResultException.class)
-    public Result<Serializable> handlerException(ResultException e) {
-        String params = e.getParams();
-        if (StringUtils.isEmpty(params)) {
-            log.error("result error. msg: {}", e.getMsg(), e);
-        } else {
-            log.error("result error. msg: {}, request params: {}", e.getMsg(), params, e);
-        }
-
-        return ResultUtils.error(e.getCode(), e.getMsg());
     }
 
     /**
