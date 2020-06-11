@@ -46,7 +46,7 @@ public class GlobalExceptionHandler {
     /**
      * RuntimeException handler
      *
-     * @param e Exception
+     * @param e RuntimeException
      * @return Result
      */
     @ExceptionHandler(value = RuntimeException.class)
@@ -72,7 +72,7 @@ public class GlobalExceptionHandler {
     /**
      * NoHandlerFoundException handler
      *
-     * @param e Exception
+     * @param e NoHandlerFoundException
      * @return Result
      */
     @ExceptionHandler(value = NoHandlerFoundException.class)
@@ -144,6 +144,8 @@ public class GlobalExceptionHandler {
         if (StringUtils.isNotEmpty(message)) {
             if (message.contains(DateTimeParseException.class.getName()) || message.contains(Date.class.getName()) || message.contains(Timestamp.class.getName())) {
                 message = field + " 格式错误";
+            } else if (message.contains(Boolean.class.getName())) {
+                message = field + " 为布尔类型. 支持的值有 0, 1, true, false";
             }
         }
 
